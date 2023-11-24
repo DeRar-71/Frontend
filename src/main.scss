@@ -12,7 +12,6 @@ $laptop-breakpoint: 840px;
     --md-sys-color-on-surface-light: #1d1b20;
     --md-sys-color-on-surface-opacity-008-light: rgba(29, 27, 32, 0.08);
     --md-sys-color-on-surface-variant-light: #49454F;
-    --md-sys-color-error-light: #B3261E;
     --md-sys-color-secondary-container-light: #E8DEF8;
 
     --md-sys-color-surface-container-dark: #211F26;
@@ -23,8 +22,18 @@ $laptop-breakpoint: 840px;
     --md-sys-color-on-surface-dark: #E6E0E9;
     --md-sys-color-on-surface-opacity-008-dark: rgba(230, 224, 233, 0.08);
     --md-sys-color-on-surface-variant-dark: #CAC4D0;
-    --md-sys-color-error-dark: #F2B8B5;
     --md-sys-color-secondary-container-dark: #4A4458;
+
+    --header-bg-light: #e7dff8;  
+    --main-bg-light: #fffbff;    
+    --footer-bg-light: #cbc3dc;
+
+    --header-bg-dark: #494458;
+    --main-bg-dark: #1c1b1e;
+    --footer-bg-dark: #cbc3dc;
+
+    --font-family-icons: 'Material Icons';
+    --font-family-icons-outlined: 'Material Symbols Outlined';
 
     @media (prefers-color-scheme: light) {
         --md-sys-color-surface-container: var(--md-sys-color-surface-container-light);
@@ -33,10 +42,13 @@ $laptop-breakpoint: 840px;
         --md-sys-color-on-secondary-container: var(--md-sys-color-on-secondary-container-light);
         --md-sys-color-on-surface: var(--md-sys-color-on-surface-light);
         --md-sys-color-on-surface-variant: var(--md-sys-color-on-surface-variant-light);
-        --md-sys-color-error: var(--md-sys-color-error-light);
         --md-sys-color-secondary-container: var(--md-sys-color-secondary-container-light);
         --md-sys-color-on-surface-opacity-008: var(--md-sys-color-on-surface-opacity-008-light);
         --md-sys-color-on-secondary-container-opacity-008: var(--md-sys-color-on-secondary-container-opacity-008-light);
+
+        --header-bg: var(--header-bg-light);
+        --main-bg: var(--main-bg-light);
+        --footer-bg: var(--footer-bg-light);
     }
 
     @media (prefers-color-scheme: dark) {
@@ -46,10 +58,13 @@ $laptop-breakpoint: 840px;
         --md-sys-color-on-secondary-container: var(--md-sys-color-on-secondary-container-dark);
         --md-sys-color-on-surface: var(--md-sys-color-on-surface-dark);
         --md-sys-color-on-surface-variant: var(--md-sys-color-on-surface-variant-dark);
-        --md-sys-color-error: var(--md-sys-color-error-dark);
         --md-sys-color-secondary-container: var(--md-sys-color-secondary-container-dark);
         --md-sys-color-on-surface-opacity-008: var(--md-sys-color-on-surface-opacity-008-dark);
         --md-sys-color-on-secondary-container-opacity-008: var(--md-sys-color-on-secondary-container-opacity-008-dark);
+
+        --header-bg: var(--header-bg-dark);
+        --main-bg: var(--main-bg-dark);
+        --footer-bg: var(--footer-bg-dark);
     }
 
 }
@@ -65,71 +80,152 @@ html, body {
 }
 
 .container {
+    --_template-columns: 1fr;
+    --_template-rows: 120px 1fr 80px 120px;
+    --_template-areas: 'header' 'main' 'nav' 'footer';
+
+    @media(min-width: $tablet-breakpoint) {
+        --_template-columns: 80px 1fr;
+        --_template-rows: 100px 1fr 100px;
+        --_template-areas: 'nav header' 'nav main' 'nav footer';
+    }
+
+    @media (min-width: $laptop-breakpoint) {
+        --_template-columns: 360px 1fr;
+    }
+
     height: 100vh;
 
     display: grid;
-    grid-template-columns: 1fr;
-    grid-template-rows: 200px 1fr 80px 200px;
-    grid-template-areas: 'header'
-                        'main'
-                        'nav'
-                        'footer';
-    
-    @media(min-width: $tablet-breakpoint) {
-        grid-template-columns: 200px repeat(2, 1fr);
-        grid-template-rows: 200px 1fr 200px;
-
-        grid-template-areas: 'nav header header'
-                        'nav main main'
-                        'nav footer footer';
-    }
+    grid-template-columns: var(--_template-columns);
+    grid-template-rows: var(--_template-rows);
+    grid-template-areas: var(--_template-areas);
 }
 
 .header {
     grid-area: header;
-    background-color: #3498db; /* Голубой цвет */
-    color: #fff; /* Белый текст для контраста */
+    background-color: var(--header-bg);
+}
+
+.main {
+    grid-area: main;
+    background-color: var(--main-bg);
+}
+
+.footer {
+    grid-area: footer;
+    background-color: var(--footer-bg);
+}
+
+.navigation-section{
+    background-color: var(--md-sys-color-surface-container);
+    grid-area: nav;
+
+    &__title {
+        display: none;
+
+        @media (min-width: $laptop-breakpoint) {
+            display: flex;
+            height: 56px;
+            padding: 8px 8px 8px 16px;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+            gap: 10px;
+            color: var(--md-sys-color-on-surface-variant);
+            font-family: Roboto;
+            font-size: 14px;
+            font-style: normal;
+            font-weight: 500;
+            line-height: 20px;
+            letter-spacing: 0.1px;
+        }
+    }
 }
 
 .navigation {
-    width: 100vw;
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    grid-area: nav;
-    padding: 12px 0 16px 0;
-    background-color: var(--md-sys-color-surface-container); /* Зелёный цвет */
-    color: #fff;
-    gap: 8px;
-    justify-content: space-evenly;
-    box-shadow: 0 0px 2px 0px rgba(0,0,0,.7);
+    --_width: 100vw;
+    --_gap: 8px;
+    --_template-columns: repeat(4, 1fr);
+    --_padding: 12px 0 16px 0;
 
+    @media (min-width: $tablet-breakpoint) {
+        --_width: 80px;
+        --_template-columns: 1fr;
+        --_gap: 12px;
+        --_padding: 16px 0;
+        grid-auto-rows: 56px;
+    }
+
+    @media (min-width: $laptop-breakpoint) {
+        --_width: 360px;
+        --_gap: 0;
+        --_padding: 0px 12px;
+    }
+
+    display: grid;
+    grid-template-columns: var(--_template-columns);
+   
+    gap: var(--_gap);
+    justify-content: space-evenly;
+    width: var(--_width);
+    padding: var(--_padding);
+    background-color: var(--md-sys-color-surface-container);
+  
     &__item {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 4px;
-        cursor: pointer;
+        --_flex-direction: column;
+        --_gap: 4px;
+  
         min-width: 48px;
+        display: flex;
+        flex-direction: var(--_flex-direction);
+        align-items: center;
+        gap: var(--_gap);
+
+        cursor: pointer;
+        
+        @media (min-width: $tablet-breakpoint) {
+            height: 56px;
+        }
+
+        @media (min-width: $laptop-breakpoint) {
+            --_flex-direction: row;
+            --_gap: 12px;
+            padding: 16px 24px 16px 16px;
+            flex: 1 0 0;
+            align-self: stretch;
+            border-radius: 100px;
+        }
 
         &:hover {
             .navigation__icon {
-                font-family: 'Material Icons';
+                font-family: var(--font-family-icons);
                 color: var(--md-sys-color-on-surface-variant);
                 background-color: var(--md-sys-color-on-surface-opacity-008);
+
+                @media (min-width: $laptop-breakpoint) {
+                    background-color: transparent;
+                }
             }
 
             .navigation__lable {
                 color: var(--md-sys-color-on-surface-variant);
             }
+
+            @media (min-width: $laptop-breakpoint) {
+                background-color: var(--md-sys-color-on-surface-opacity-008);
+            }
         }
 
         &--active {
-
             &:hover {
                 .navigation__icon {
                     color: var(--md-sys-color-on-secondary-container);
                     background-color: var(--md-sys-color-on-secondary-container-opacity-008);
                     
+                    @media (min-width: $laptop-breakpoint) {
+                        background-color: transparent;
+                    }
                 }
     
                 .navigation__lable {
@@ -138,14 +234,18 @@ html, body {
             }
 
             .navigation__icon {
+                font-family: var(--font-family-icons);
                 color: var(--md-sys-color-on-surface);
                 background-color: var(--md-sys-color-secondary-container);
-                font-family: 'Material Icons';
             }
 
             .navigation__lable {
                 color: var(--md-sys-color-on-surface);
                 font-weight: 600;
+            }
+
+            @media (min-width: $laptop-breakpoint) {
+                background-color: var(--md-sys-color-secondary-container);
             }
         }
     }
@@ -159,7 +259,7 @@ html, body {
         align-items: center;
         color: var(--md-sys-color-on-surface-variant);
         
-        font-family: 'Material Symbols Outlined';
+        font-family: var(--font-family-icons-outlined);
         font-weight: normal;
         font-style: normal;
         font-size: 24px;
@@ -170,26 +270,35 @@ html, body {
         word-wrap: normal;
         direction: ltr;
         -webkit-font-smoothing: antialiased;
+
+        @media (min-width: $tablet-breakpoint) {
+            width: 56px;
+            border-radius: 100px;
+            padding-inline: 16px;
+        }
+
+        @media (min-width: $laptop-breakpoint) {
+            width: 24px;
+            border-radius: 0;
+            padding-inline: 0;
+        }
     }
 
     &__lable {
+        --_font-size: 12px;
+        --_letter-spacing: .5px;
+        --_line-height: 16px;
+
+        @media (min-width: $laptop-breakpoint) {
+            --_font-size: 14px;
+            --_letter-spacing: .1px;
+            --_line-height: 20px;
+        }
+
         font-weight: 500;
-        line-height: 16px;
-        font-size: 12px;
-        letter-spacing: .5px;
+        line-height: var(--_line-height);
+        font-size: var(--_font-size);
+        letter-spacing: var(--_letter-spacing);
         color: var(--md-sys-color-on-surface-variant);
     }
-
-}
-
-.main {
-    grid-area: main;
-    background-color: #ecf0f1; /* Светло-серый цвет */
-    color: #333; /* Темный текст для контраста */
-}
-
-.footer {
-    grid-area: footer;
-    background-color: #e74c3c; /* Красный цвет */
-    color: #fff;
 }
