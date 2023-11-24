@@ -1,0 +1,173 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+
+$tablet-breakpoint: 600px;
+$laptop-breakpoint: 840px;
+
+:root {
+    --md-sys-color-surface-container-light: #F3EDF7;
+    --md-sys-color-surface-tint-light: #6750A4;
+    --md-sys-color-shadow-light: #000000;
+    --md-sys-color-on-secondary-container-light: #1D192B;
+    --md-sys-color-on-surface-light: #1D1B20;
+    --md-sys-color-on-surface-variant-light: #49454F;
+    --md-sys-color-error-light: #B3261E;
+    --md-sys-color-secondary-container-light: #E8DEF8;
+
+    --md-sys-color-surface-container-dark: #211F26;
+    --md-sys-color-surface-tint-dark: #D0BCFF;
+    --md-sys-color-shadow-dark: #000000;
+    --md-sys-color-on-secondary-container-dark: #CAC4D0;
+    --md-sys-color-on-surface-dark: #E6E0E9;
+    --md-sys-color-on-surface-variant-dark: #CAC4D0;
+    --md-sys-color-error-dark: #F2B8B5;
+    --md-sys-color-secondary-container-dark: #4A4458;
+
+    @media (prefers-color-scheme: light) {
+        --md-sys-color-surface-container: var(--md-sys-color-surface-container-light);
+        --md-sys-color-surface-tint: var(--md-sys-color-surface-tint-light);
+        --md-sys-color-shadow: var(--md-sys-color-shadow-light);
+        --md-sys-color-on-secondary-container: var(--md-sys-color-on-secondary-container-light);
+        --md-sys-color-on-surface: var(--md-sys-color-on-surface-light);
+        --md-sys-color-on-surface-variant: var(--md-sys-color-on-surface-variant-light);
+        --md-sys-color-error: var(--md-sys-color-error-light);
+        --md-sys-color-secondary-container: var(--md-sys-color-secondary-container-light);
+    }
+
+    @media (prefers-color-scheme: dark) {
+        --md-sys-color-surface-container: var(--md-sys-color-surface-container-dark);
+        --md-sys-color-surface-tint: var(--md-sys-color-surface-tint-dark);
+        --md-sys-color-shadow: var(--md-sys-color-shadow-dark);
+        --md-sys-color-on-secondary-container: var(--md-sys-color-on-secondary-container-dark);
+        --md-sys-color-on-surface: var(--md-sys-color-on-surface-dark);
+        --md-sys-color-on-surface-variant: var(--md-sys-color-on-surface-variant-dark);
+        --md-sys-color-error: var(--md-sys-color-error-dark);
+        --md-sys-color-secondary-container: var(--md-sys-color-secondary-container-dark);
+    }
+
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    font-family: 'Roboto', sans-serif;
+}
+
+.container {
+    height: 100vh;
+
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 200px 1fr 80px 200px;
+    grid-template-areas: 'header'
+                        'main'
+                        'nav'
+                        'footer';
+    
+    @media(min-width: $tablet-breakpoint) {
+        grid-template-columns: 200px repeat(2, 1fr);
+        grid-template-rows: 200px 1fr 200px;
+
+        grid-template-areas: 'nav header header'
+                        'nav main main'
+                        'nav footer footer';
+    }
+}
+
+.header {
+    grid-area: header;
+    background-color: #3498db; /* Голубой цвет */
+    color: #fff; /* Белый текст для контраста */
+}
+
+.navigation {
+    width: 100vw;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-area: nav;
+    padding: 12px 0 16px 0;
+    background-color: var(--md-sys-color-surface-container); /* Зелёный цвет */
+    color: #fff;
+    gap: 8px;
+    min-width: 48px;
+    justify-content: space-evenly;
+
+    &__item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 4px;
+        cursor: pointer;
+
+        &:hover {
+            .navigation__icon {
+                font-family: 'Material Icons';
+                box-shadow: 0 0px 2px 0px rgba(0,0,0,.7);
+                color: var(--md-sys-color-secondary-container);
+                background-color: var(--md-sys-color-on-secondary-container);
+            }
+
+            .navigation__lable {
+                font-weight: 700;
+            }
+        }
+
+        &--active {
+            .navigation__icon {
+                color: var(--md-sys-color-on-secondary-container);
+                background-color: var(--md-sys-color-secondary-container);
+                font-family: 'Material Icons';
+            }
+
+            .navigation__lable {
+                font-weight: 700;
+            }
+        }
+    }
+
+    &__icon {
+        height: 32px;
+        width: 64px;
+        border-radius: 16px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: var(--md-sys-color-on-surface-variant);
+        
+        font-family: 'Material Symbols Outlined';
+        font-weight: normal;
+        font-style: normal;
+        font-size: 24px;
+        line-height: 1;
+        letter-spacing: normal;
+        text-transform: none;
+        white-space: nowrap;
+        word-wrap: normal;
+        direction: ltr;
+        -webkit-font-smoothing: antialiased;
+    }
+
+    &__lable {
+        font-weight: 500;
+        line-height: 16px;
+        font-size: 12px;
+        letter-spacing: .5;
+        color: var(--md-sys-color-on-surface-variant);
+    }
+
+}
+
+.main {
+    grid-area: main;
+    background-color: #ecf0f1; /* Светло-серый цвет */
+    color: #333; /* Темный текст для контраста */
+}
+
+.footer {
+    grid-area: footer;
+    background-color: #e74c3c; /* Красный цвет */
+    color: #fff;
+}
